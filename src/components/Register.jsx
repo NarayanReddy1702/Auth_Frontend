@@ -22,8 +22,7 @@ const Register = () => {
   try {
     const res = await axios.post(
       "https://auth-backend-9hom.onrender.com/api/user/register",
-      formData,
-      { withCredentials: true }
+      formData
     );
 
     console.log(res.data);

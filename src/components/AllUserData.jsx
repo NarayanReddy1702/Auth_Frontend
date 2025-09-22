@@ -10,9 +10,7 @@ const AllUserData = () => {
     async function getAllUser() {
       const res = await axios.get(
         `https://auth-backend-9hom.onrender.com/api/user/allUser`,
-        {
-          withCredentials: true,
-        }
+       
       );
       setAllUser(res.data.allUserData);
     }

@@ -16,9 +16,7 @@ const Update = () => {
   useEffect(() => {
     async function getAllUser() {
       try {
-        const res = await axios.get("https://auth-backend-9hom.onrender.com/api/user/allUser", {
-          withCredentials: true,
-        });
+        const res = await axios.get("https://auth-backend-9hom.onrender.com/api/user/allUser");
 
         const data = res.data.allUserData.find((item) => item._id === userId);
 
@@ -47,8 +45,7 @@ const Update = () => {
     try {
       const res = await axios.put(
         `https://auth-backend-9hom.onrender.com/api/user/updateUser/${userId}`,
-        formData,
-        { withCredentials: true }
+        formData
       );
 
       if (res.data.success) {
