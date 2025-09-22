@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -21,7 +22,7 @@ const Login = () => {
 
   try {
     const res = await axios.post(
-      "http://localhost:5000/api/user/login",
+      "https://auth-backend-9hom.onrender.com/api/user/login",
       formData,
       { withCredentials: true }
     );
@@ -34,33 +35,66 @@ const Login = () => {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
-      alert(res.data.message || "Login Successful!");
+      toast.success(res.data.message || "Login Successful!",{ position: "top-right" });
       navigate("/");
     } else {
-      alert(res.data?.message || "Invalid login credentials!");
+      toast.error(res.data?.message || "Invalid login credentials!",{ position: "top-right" });
     }
   } catch (error) {
     console.error("Login error:", error.response?.data || error.message);
-    alert(error.response?.data?.message || "Login failed, please try again.");
+    toast.success(error.response?.data?.message || "Login failed, please try again.",{ position: "top-right" });
   }
 };
 
 
 
   return (
-   <div className='w-full h-screen flex items-center justify-center'>
-     <div className='w-100 shadow-md border-black h-[50%] rounded-md'>
-        <h1 className='text-center text-blue-500 font-semibold text-2xl'>Login</h1>
-       <div >
-        <form className='flex items-center justify-center gap-5 flex-col mt-15 px-5' onSubmit={handleSubmit} action="">
-        <input value={formData.email} onChange={handleChange} name='email' className='w-full px-4 py-2 rounded-md text-black border-2 border-black' type="email"  placeholder='Enter your email'/>
-        <input value={formData.password} onChange={handleChange} name='password' className='w-full px-4 py-2 rounded-md text-black border-2 border-black' type="password"  placeholder='Enter your password'/>
-        <input className='bg-blue-500 text-white font-semibold rounded-md w-full py-3' type="submit" value={"Login"} />
-        <h1 className='text-center text-blue-950  cursor-pointer' onClick={()=>navigate("/register")}>Create a new account</h1>
-        </form>
-       </div>
-     </div>
-   </div>
+   <div className="w-full h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100">
+  <div className="w-[380px] shadow-lg border border-gray-200 rounded-2xl bg-white p-6">
+    <h1 className="text-center text-blue-600 font-bold text-3xl mb-6">
+      Login
+    </h1>
+
+    <form
+      className="flex flex-col gap-4"
+      onSubmit={handleSubmit}
+      action=""
+    >
+      <input
+        value={formData.email}
+        onChange={handleChange}
+        name="email"
+        className="w-full px-4 py-2 rounded-lg text-gray-800 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
+        type="email"
+        placeholder="Enter your email"
+      />
+
+      <input
+        value={formData.password}
+        onChange={handleChange}
+        name="password"
+        className="w-full px-4 py-2 rounded-lg text-gray-800 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
+        type="password"
+        placeholder="Enter your password"
+      />
+
+      <input
+        className="bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-lg w-full py-3 cursor-pointer hover:opacity-90 transition-all shadow-md"
+        type="submit"
+        value={"Login"}
+      />
+
+      <h1
+        className="text-center text-sm text-gray-600 cursor-pointer hover:underline"
+        onClick={() => navigate("/register")}
+      >
+        Don’t have an account?{" "}
+        <span className="text-blue-600">Create one</span>
+      </h1>
+    </form>
+  </div>
+</div>
+
   )
 }
 

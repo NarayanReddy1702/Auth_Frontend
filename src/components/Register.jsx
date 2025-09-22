@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 import {useNavigate} from "react-router-dom"
 
 const Register = () => {
@@ -20,7 +21,7 @@ const Register = () => {
 
   try {
     const res = await axios.post(
-      "http://localhost:5000/api/user/register",
+      "https://auth-backend-9hom.onrender.com/api/user/register",
       formData,
       { withCredentials: true }
     );
@@ -29,35 +30,75 @@ const Register = () => {
 
     if (res.data.success) {
       setFormData({ username: "", email: "", password: "" });
-      alert("User Registered Successfully!");
+      toast.success("User Registered Successfully!",{position:"top-right"});
       navigate("/login");
     } else {
-      alert(res.data.message || "Something went wrong!");
+      toast.error(res.data.message || "Something went wrong!",{position:"top-right"});
       console.log(res.data.message);
     }
   } catch (error) {
     console.error("Register Error:", error.response?.data || error.message);
-    alert(error.response?.data?.message || "Registration failed!");
+    toast.error(error.response?.data?.message || "Registration failed!",{position:"top-right"});
   }
 };
 
 
 
   return (
-   <div className='w-full h-screen flex items-center justify-center'>
-     <div className='w-100 shadow-md border-black h-[60%] rounded-md'>
-        <h1 className='text-center text-blue-500 font-semibold text-2xl'>Create an Account</h1>
-       <div >
-        <form className='flex items-center justify-center gap-5 flex-col mt-15 px-5' onSubmit={handleSubmit} action="">
-             <input value={formData.username} onChange={handleChange} name='username' className='w-full px-4 py-2 rounded-md text-black border-2 border-black' type="text"  placeholder='Enter your username'/>
-        <input value={formData.email} onChange={handleChange} name='email' className='w-full px-4 py-2 rounded-md text-black border-2 border-black' type="email"  placeholder='Enter your email'/>
-        <input value={formData.password} onChange={handleChange} name='password' className='w-full px-4 py-2 rounded-md text-black border-2 border-black' type="password"  placeholder='Enter your password'/>
-        <input className='bg-blue-500 text-white font-semibold rounded-md w-full py-3' type="submit" value={"Register"} />
-        <h1 className='text-center text-blue-950 cursor-pointer' onClick={()=>navigate("/login")}>if You already have an account</h1>
-        </form>
-       </div>
-     </div>
-   </div>
+   <div className="w-full h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100">
+  <div className="w-[400px] shadow-lg border border-gray-200 h-auto rounded-2xl bg-white p-6">
+    <h1 className="text-center text-blue-600 font-bold text-3xl mb-6">
+      Create an Account
+    </h1>
+
+    <form
+      className="flex flex-col gap-4"
+      onSubmit={handleSubmit}
+      action=""
+    >
+      <input
+        value={formData.username}
+        onChange={handleChange}
+        name="username"
+        className="w-full px-4 py-2 rounded-lg text-gray-800 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
+        type="text"
+        placeholder="Enter your username"
+      />
+
+      <input
+        value={formData.email}
+        onChange={handleChange}
+        name="email"
+        className="w-full px-4 py-2 rounded-lg text-gray-800 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
+        type="email"
+        placeholder="Enter your email"
+      />
+
+      <input
+        value={formData.password}
+        onChange={handleChange}
+        name="password"
+        className="w-full px-4 py-2 rounded-lg text-gray-800 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
+        type="password"
+        placeholder="Enter your password"
+      />
+
+      <input
+        className="bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-lg w-full py-3 cursor-pointer hover:opacity-90 transition-all shadow-md"
+        type="submit"
+        value={"Register"}
+      />
+
+      <h1
+        className="text-center text-sm text-gray-600 cursor-pointer hover:underline"
+        onClick={() => navigate("/login")}
+      >
+        Already have an account? <span className="text-blue-600">Login</span>
+      </h1>
+    </form>
+  </div>
+</div>
+
   )
 }
 

@@ -10,12 +10,13 @@ import ProtectRouter from "./middleware/ProtectRouter";
 import AllUserData from "./components/AllUserData";
 import Update from "./components/Update";
 import Profile from "./components/Profile";
+import { Toaster } from "react-hot-toast";
 
 
 const App = () => {
   return (
     <Router>
-      <div className="p-4">
+      
         <Routes>
           <Route path="/" element={<ProtectRouter><Home/></ProtectRouter>} />
           <Route path="/allUser" element={<ProtectRouter><AllUserData/></ProtectRouter> } />
@@ -26,8 +27,10 @@ const App = () => {
           <Route path="/login" element={<Login/>}/>
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </div>
+
+      <Toaster/>
     </Router>
+    
   );
 };
 

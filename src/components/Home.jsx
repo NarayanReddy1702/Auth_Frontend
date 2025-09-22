@@ -12,18 +12,43 @@ const navigate = useNavigate()
        },1000)
   }
   return (
-   <>    <div className=' text-white w-full h-screen rounded-md overflow-hidden'>
-           <div className='bg-blue-400 flex justify-between  items-center h-[11%] px-10 '>
-            <h1>Logo</h1>
-            
-            <div className=' flex gap-3 cursor-pointer'><h1 className='text-white gap-4' onClick={()=>navigate("/profile")} >Profile</h1><button className='bg-red-500 text-white font-bold px-4 py-1 rounded cursor-pointer' onClick={handleLogout}>Logout</button></div>
-           </div>
-          <div className='flex items-center justify-center flex-col gap-5 h-[89%] bg-black '>
-            <h1 className='text-white text-5xl font-semibold'>Welcome to learn MERN development</h1>
-            <button onClick={()=>navigate("/allUser")} className='bg-blue-600 cursor-pointer rounded-md text-white px-4 py-2 text-xl'>Get Started</button>
-          </div>
+   <>
+  <div className="text-white w-full h-screen flex flex-col overflow-hidden">
+    {/* Navbar */}
+    <div className="bg-gradient-to-r from-blue-500 to-blue-700 flex justify-between items-center h-[12%] px-10 shadow-md">
+      <h1 className="text-2xl font-bold tracking-wide">🚀 MERN Logo</h1>
+
+      <div className="flex gap-6 items-center">
+        <h1
+          className="hover:text-gray-200 text-lg cursor-pointer transition"
+          onClick={() => navigate("/profile")}
+        >
+          Profile
+        </h1>
+        <button
+          className="bg-red-500 cursor-pointer hover:bg-red-600 text-white font-semibold px-5 py-2 rounded-lg shadow transition"
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+      </div>
     </div>
-   </>
+
+    {/* Hero Section */}
+    <div className="flex-1 flex flex-col items-center justify-center gap-8 bg-gradient-to-br from-black via-gray-900 to-gray-800">
+      <h1 className="text-white text-5xl font-extrabold text-center leading-snug">
+        Welcome to <span className="text-blue-400">Learn MERN Development</span>
+      </h1>
+      <button
+        onClick={() => navigate("/allUser")}
+        className="bg-blue-600 hover:bg-blue-700 transition cursor-pointer rounded-lg text-white px-6 py-3 text-xl font-semibold shadow-lg"
+      >
+        Get Started
+      </button>
+    </div>
+  </div>
+</>
+
   )
 }
 

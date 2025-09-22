@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 
 const Update = () => {
@@ -15,7 +16,7 @@ const Update = () => {
   useEffect(() => {
     async function getAllUser() {
       try {
-        const res = await axios.get("http://localhost:5000/api/user/allUser", {
+        const res = await axios.get("https://auth-backend-9hom.onrender.com/api/user/allUser", {
           withCredentials: true,
         });
 
@@ -45,69 +46,71 @@ const Update = () => {
     e.preventDefault();
     try {
       const res = await axios.put(
-        `http://localhost:5000/api/user/updateUser/${userId}`,
+        `https://auth-backend-9hom.onrender.com/api/user/updateUser/${userId}`,
         formData,
         { withCredentials: true }
       );
 
       if (res.data.success) {
-        alert("User updated successfully!");
+        toast.success("User updated successfully!",{position:"top-right"});
         setFormData({ username: "", email: "", password: "" });
         navigate("/allUser");
       }
     } catch (err) {
-      console.error("Update failed", err);
+      toast.error("User Update Failed",{position:"right-right"})
     }
   };
 
   return (
-    <div className="w-full h-screen flex items-center justify-center">
-      <div className="w-100 shadow-md border-black h-[50%] rounded-md p-5">
-        <h1 className="text-center text-orange-500 font-semibold text-2xl">
-          Update User
-        </h1>
-        <form
-          className="flex items-center justify-center gap-5 flex-col mt-5 px-5"
-          onSubmit={handleUpdate}
-        >
-          <input
-            value={formData.username}
-            onChange={handleChange}
-            name="username"
-            className="w-full px-4 py-2 rounded-md text-black border-2 border-black"
-            type="text"
-            placeholder="Enter your username"
-          />
-          <input
-            value={formData.email}
-            onChange={handleChange}
-            name="email"
-            className="w-full px-4 py-2 rounded-md text-black border-2 border-black"
-            type="email"
-            placeholder="Enter your email"
-          />
-          <input
-            value={formData.password}
-            onChange={handleChange}
-            name="password"
-            className="w-full px-4 py-2 rounded-md text-black border-2 border-black"
-            type="password"
-            placeholder="Enter your password"
-          />
-          <input
-            className="bg-orange-500 text-white font-semibold rounded-md w-full py-3"
-            type="submit"
-            value="Update"
-          />
-          <h1
-            className="text-center text-orange-600 cursor-pointer"
-            onClick={() => navigate("/login")}
-          >
-            If you already have an account
-          </h1>
-        </form>
-      </div>
-    </div>
+   <div className="w-full h-screen flex items-center justify-center bg-gray-100">
+  <div className="w-[400px] bg-white shadow-lg border border-gray-200 rounded-2xl p-8">
+    <h1 className="text-center text-orange-500 font-bold text-3xl mb-6">
+      Update User
+    </h1>
+    <form
+      className="flex flex-col gap-4"
+      onSubmit={handleUpdate}
+    >
+      <input
+        value={formData.username}
+        onChange={handleChange}
+        name="username"
+        className="w-full px-4 py-2 rounded-lg text-gray-800 border border-gray-300 focus:ring-2 focus:ring-orange-400 focus:outline-none transition"
+        type="text"
+        placeholder="Enter your username"
+      />
+      <input
+        value={formData.email}
+        onChange={handleChange}
+        name="email"
+        className="w-full px-4 py-2 rounded-lg text-gray-800 border border-gray-300 focus:ring-2 focus:ring-orange-400 focus:outline-none transition"
+        type="email"
+        placeholder="Enter your email"
+      />
+      <input
+        value={formData.password}
+        onChange={handleChange}
+        name="password"
+        className="w-full px-4 py-2 rounded-lg text-gray-800 border border-gray-300 focus:ring-2 focus:ring-orange-400 focus:outline-none transition"
+        type="password"
+        placeholder="Enter your password"
+      />
+      <button
+        type="submit"
+        className="bg-orange-500 hover:bg-orange-600 cursor-pointer text-white font-semibold rounded-lg w-full py-3 transition"
+      >
+        Update
+      </button>
+      <p
+        className="text-center text-sm text-gray-600 mt-2 cursor-pointer hover:text-orange-600"
+        onClick={() => navigate("/login")}
+      >
+        Already have an account? <span className="font-semibold cursor-pointer">Login</span>
+      </p>
+    </form>
+  </div>
+</div>
+
   );
 };
 
